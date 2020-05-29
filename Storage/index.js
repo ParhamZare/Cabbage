@@ -30,7 +30,7 @@ export const Storage = {
             if (key.toString().length > 0) {
                 try {
                     const data = await Storage.db.data.where("key").equalsIgnoreCase(key).toArray();
-                    if (data && data.length >= 0) {
+                    if (data && data.length > 0) {
                         resolve(data[0].data)
                     } else {
                         resolve({})
