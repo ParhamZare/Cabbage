@@ -12,10 +12,8 @@ export const Storage = {
     db: undefined,
     event: async (callback) => {
         emitter.on('changedData', listener = function (args) {
-            console.log("CHANGED DATA IS CALLED ")
+            const result = {};
             Storage.get(args.key).then((data) => {
-                console.log("DATA", data)
-                const result = {};
                 result[args.key] = data;
                 callback(args.key, result);
             })
@@ -29,11 +27,19 @@ export const Storage = {
     },
     get: (key) => {
         return new Promise(async (resolve, reject) => {
-            try {
-                const data = await Storage.db.data.where("key").equalsIgnoreCase(key).toArray();
-                resolve(data[0].data)
-            } catch (e) {
-                reject(e)
+            if (key.toString().length > 0) {
+                try {
+                    const data = await Storage.db.data.where("key").equalsIgnoreCase(key).toArray();
+                    if (data && data.length >= 0) {
+                        resolve(data[0].data)
+                    } else {
+                        resolve({})
+                    }
+                } catch (e) {
+                    reject(e)
+                }
+            } else {
+                console.warn("the key for state management cant be empty")
             }
         })
     },
