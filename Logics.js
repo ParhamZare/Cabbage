@@ -1,5 +1,6 @@
 
-const Logics={
+
+const Logics = {
     
 }
 export default Logics
