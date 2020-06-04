@@ -1,22 +1,27 @@
 import Logics from './Logics'
 import Storage from './Storage'
-import useStateManagement from './Hook'
+import StateManagement from './Hook'
 
 Storage.init();
+
 const Manager = {
-    do: async (func, params, key) => {
+    do: async ({func, params, key}) => {
         const data = await func({...params});
-
         if (data !== undefined) {
-            const result = await Storage.set(key, data)
-            console.log(result);
+            const result = await Storage.set(key, data);
+            //todo define callback :)
+            if (result.status) {
 
+            } else {
+
+            }
         }
     },
-}
-export const doSomeThing = (key, params) => {
+};
+
+export const doAction = (key, params) => {
     if (Logics[key] !== undefined && typeof Logics[key] === "function") {
-        Manager.do(Logics[key], params, key).then(() => {
+        Manager.do({func: Logics[key], params, key}).then(() => {
 
         }).catch(() => {
 
@@ -25,9 +30,9 @@ export const doSomeThing = (key, params) => {
     } else {
         console.log("the key is not defined ;)")
     }
-}
+};
 
 export const StateManager = {
-    doSomeThing,
-    useStateManagement
-}
+    doAction,
+    useData: StateManagement
+};

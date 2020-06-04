@@ -1,8 +1,8 @@
-import  {useState, useEffect} from 'react';
+import {useState, useEffect} from 'react';
 import Storage from './Storage'
 
 function useStateManagement({keys}) {
-    const [data, setData] = useState();
+    const [data, setData] = useState({});
     const generateKeyForEachComponent = Math.random();
 
     useEffect(() => {
@@ -23,10 +23,10 @@ function useStateManagement({keys}) {
         Storage.rehydrate(keys).then((response) => {
             this.localDataOfState[generateKeyForEachComponent] = response;
             setData(response)
-        }).catch(() => {
-
+        }).catch((e) => {
+            setData({});
+            console.log("Warn Unable to rehydrate data", e)
         })
-
     }, []);
 
     return {

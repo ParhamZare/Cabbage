@@ -46,11 +46,12 @@ export const Storage = {
     set: (key, data) => {
         return new Promise(async (resolve, reject) => {
             try {
-                const response = await Storage.db.data.put({key, data})
-                resolve({message: "Saved", key: response})
+                const response = await Storage.db.data.put({key, data});
                 emitter.emit('changedData', {key: response});
+                resolve({message: "Saved", key: response, status: true});
+
             } catch (error) {
-                reject(error)
+                resolve({hasError: true, error: error, status: false});
             }
         })
     },
