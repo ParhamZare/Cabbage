@@ -1,6 +1,6 @@
 # Cabbage
 
-The Cabbage is a StateManager for React Component and Store Data Directly to indexDB or another Storage like Local/Session Storage. 
+The Cabbage is a StateManager for React Component and Store Data Directly to IndexedDB  or another Storage like Local/Session Storage. 
 
 
 **Architecht of statemanager**
